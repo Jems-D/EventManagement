@@ -16,7 +16,7 @@ namespace backend.Controllers
 
         public EventController(EventDbContext context)
         {
-            context = _context;
+            _context = context;
         }
 
         [HttpPost]
@@ -27,6 +27,17 @@ namespace backend.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetEventItem), new { id = eT.Id }, eT);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<EventItems>> GetEventItem(int id)
+        {
+            var item = await _context.EventManagement.FindAsync(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            return item;
         }
     }
 }
