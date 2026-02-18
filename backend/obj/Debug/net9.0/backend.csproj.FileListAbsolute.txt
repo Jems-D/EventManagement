@@ -237,3 +237,8 @@ C:\Users\Timothy\Desktop\Important\EventBookingApi\backend\obj\Debug\net9.0\refi
 C:\Users\Timothy\Desktop\Important\EventBookingApi\backend\obj\Debug\net9.0\backend.pdb
 C:\Users\Timothy\Desktop\Important\EventBookingApi\backend\obj\Debug\net9.0\backend.genruntimeconfig.cache
 C:\Users\Timothy\Desktop\Important\EventBookingApi\backend\obj\Debug\net9.0\ref\backend.dll
+C:\Users\Timothy\Desktop\Important\EventBookingApi\backend\bin\Debug\net9.0\backend.xml
+C:\Users\Timothy\Desktop\Important\EventBookingApi\backend\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\Timothy\Desktop\Important\EventBookingApi\backend\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\Timothy\Desktop\Important\EventBookingApi\backend\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\Timothy\Desktop\Important\EventBookingApi\backend\obj\Debug\net9.0\backend.xml
