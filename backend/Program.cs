@@ -1,6 +1,7 @@
 using backend.Class;
 using backend.DBContext;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,7 +36,10 @@ builder.Services.AddSwaggerGen(options =>
     );
 });
 
-builder.Services.AddDbContext<DbContext>(opt => opt.UseInMemoryDatabase("EventList"));
+builder.Services.AddDbContext<DbContext>(opt =>
+{
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 
 var app = builder.Build();
 
