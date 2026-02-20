@@ -12,6 +12,6 @@ namespace backend.DBContext
         public EventDbContext(DbContextOptions<EventDbContext> options)
             : base(options) { }
 
-        public DbSet<EventItems> EventManagement { get; set; }
+        public DbSet<EventBooking> EventManagement { get; set; }
     }
 }

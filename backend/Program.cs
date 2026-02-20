@@ -1,5 +1,7 @@
 using backend.Class;
 using backend.DBContext;
+using backend.Interfaces;
+using backend.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
@@ -36,10 +38,12 @@ builder.Services.AddSwaggerGen(options =>
     );
 });
 
-builder.Services.AddDbContext<DbContext>(opt =>
+builder.Services.AddDbContext<EventDbContext>(opt =>
 {
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddScoped<IEventBooking, EventBookingRepository>();
 
 var app = builder.Build();
 
@@ -57,7 +61,7 @@ if (app.Environment.IsDevelopment())
         options.RoutePrefix = string.Empty;
     });
 }
-
+app.MapControllers();
 app.UseHttpsRedirection();
 
 app.Run();

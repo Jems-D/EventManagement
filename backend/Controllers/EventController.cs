@@ -4,6 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using backend.Class;
 using backend.DBContext;
+using backend.DTO;
+using backend.Interfaces;
+using backend.Mappers.EventBookingMappers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
@@ -12,32 +15,28 @@ namespace backend.Controllers
     [Route("api/[controller]")]
     public class EventController : ControllerBase
     {
-        private readonly EventDbContext _context;
+        private readonly IEventBooking _repoEvent;
 
-        public EventController(EventDbContext context)
+        public EventController(IEventBooking repoEvent)
         {
-            _context = context;
+            _repoEvent = repoEvent;
         }
 
         [HttpPost]
-        public async Task<ActionResult<EventItems>> PostEvents(EventItems eT)
+        public async Task<ActionResult<EventBooking>> PostEvents(
+            [FromBody] CreateEventBookingDTO eventBookingDTO
+        )
         {
-            _context.EventManagement.Add(eT);
+            var createdEvent = eventBookingDTO.ToEventBookingFromDTO();
+            await _repoEvent.CreateEvent(createdEvent);
 
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetEventItem), new { id = eT.Id }, eT);
+            return Ok(createdEvent);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<EventItems>> GetEventItem(int id)
+        public async Task<ActionResult<EventBooking>> GetEventItem(int id)
         {
-            var item = await _context.EventManagement.FindAsync(id);
-            if (item == null)
-            {
-                return NotFound();
-            }
-            return item;
+            return Ok();
         }
     }
 }
