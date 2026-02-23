@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using backend.Class;
 using backend.DBContext;
-using backend.DTO;
-using backend.Interfaces;
-using backend.Mappers.EventBookingMappers;
+using backend.Features.Events.CreateEvents;
+using backend.Features.Events.GetEvent;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
@@ -15,28 +15,29 @@ namespace backend.Controllers
     [Route("api/[controller]")]
     public class EventController : ControllerBase
     {
-        private readonly IEventBooking _repoEvent;
+        private readonly ISender _sender;
 
-        public EventController(IEventBooking repoEvent)
+        public EventController(ISender sender)
         {
-            _repoEvent = repoEvent;
+            _sender = sender;
         }
 
         [HttpPost]
-        public async Task<ActionResult<EventBooking>> PostEvents(
-            [FromBody] CreateEventBookingDTO eventBookingDTO
-        )
+        public async Task<ActionResult<string>> CreateEvent(CreateEventCommand eventCommand)
         {
-            var createdEvent = eventBookingDTO.ToEventBookingFromDTO();
-            await _repoEvent.CreateEvent(createdEvent);
-
+            var createdEvent = await _sender.Send(eventCommand);
             return Ok(createdEvent);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<EventBooking>> GetEventItem(int id)
+        public async Task<ActionResult<EventBooking>> GetEventById(int id)
         {
-            return Ok();
+            var eventBooked = await _sender.Send(new GetEventByIdQuery(id));
+            if (eventBooked is null)
+            {
+                return NotFound();
+            }
+            return eventBooked;
         }
     }
 }

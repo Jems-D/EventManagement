@@ -1,7 +1,5 @@
 using backend.Class;
 using backend.DBContext;
-using backend.Interfaces;
-using backend.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
@@ -43,7 +41,10 @@ builder.Services.AddDbContext<EventDbContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-builder.Services.AddScoped<IEventBooking, EventBookingRepository>();
+builder.Services.AddMediatR(configuration =>
+{
+    configuration.RegisterServicesFromAssembly(typeof(Program).Assembly);
+});
 
 var app = builder.Build();
 
