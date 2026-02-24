@@ -13,5 +13,6 @@ namespace backend.DBContext
             : base(options) { }
 
         public DbSet<EventBooking> EventManagement { get; set; }
+        public DbSet<EventDetails> EventDetails { get; set; }
     }
 }

@@ -13,20 +13,23 @@ namespace backend.Class
         [Key]
         [Column("Event_Details_ID", TypeName = "int")]
         public int EventDetailsId { get; set; }
+
+        [Column("Event_ID")]
         public int EventId { get; set; }
 
+        [Column("Requester_ID")]
         public int RequesterId { get; set; }
 
-        [Column("Event_Time_Start", TypeName = "datetime")]
+        [Column("Event_Time_Starts", TypeName = "datetime")]
         public DateTime EventTimeStart { get; set; }
 
-        [Column("Event_Time_End", TypeName = "datetime")]
+        [Column("Event_Time_Ends", TypeName = "datetime")]
         public DateTime EventTimeEnd { get; set; }
 
         [Column("Venue", TypeName = "varchar(250)")]
         public string? Venue { get; set; }
 
-        [Column("Venue_Address", TypeName = "varchar(250)")]
+        [Column("VenueAddress", TypeName = "varchar(250)")]
         public string? VenueAddress { get; set; }
 
         [Column("VenueCapacity", TypeName = "int")]

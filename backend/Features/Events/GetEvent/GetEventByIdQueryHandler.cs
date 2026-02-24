@@ -3,6 +3,7 @@ using Azure.Core;
 using backend.Class;
 using backend.DBContext;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Features.Events.GetEvent;
 
@@ -26,5 +27,18 @@ public class GetEventByIdQueryHandler : IRequestHandler<GetEventByIdQuery, Event
             return null;
         }
         return eventBooked;
+    }
+
+    public async Task<int?> Handle(GetEventIdQuery request, CancellationToken cancellationToken)
+    {
+        int? eventId = await _context
+            .EventManagement.Where(e => e.EventId == request.id)
+            .Select(e => e.EventId)
+            .FirstOrDefaultAsync();
+        if (eventId is null)
+        {
+            return null;
+        }
+        return eventId;
     }
 }
