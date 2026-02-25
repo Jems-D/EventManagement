@@ -7,6 +7,7 @@ using backend.DBContext;
 using backend.DTO;
 using backend.Features.Events.CreateEvents;
 using backend.Features.Events.GetEvent;
+using backend.Features.Events.GetEventDetails;
 using backend.Mapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -46,6 +47,15 @@ namespace backend.Controllers
             return Ok(eventDetailsBooked);
         }
 
+        [HttpGet("api/details/{id}")]
+        public async Task<ActionResult<EventBooking>> GetEventDetailsById(int id)
+        {
+            var eventDetails = await _sender.Send(new GetEventDetailsByIdQuery(id));
+            if (eventDetails is null)
+                return NotFound("No event found");
+            return Ok(eventDetails);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<EventBooking>> GetEventById(int id)
         {
@@ -55,6 +65,16 @@ namespace backend.Controllers
                 return NotFound();
             }
             return eventBooked;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<EventBookingDTO>>> GetAllEventDetails()
+        {
+            var allEventDetails = await _sender.Send(new GetEventDetailsQuery());
+            if (allEventDetails is null)
+                return NotFound("No events found");
+
+            return allEventDetails.Select(s => s.ToEventBookingDTO()).ToList();
         }
     }
 }

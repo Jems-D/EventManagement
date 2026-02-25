@@ -44,5 +44,7 @@ namespace backend.Class
 
         [ForeignKey("CreatedBy")]
         public UserAccount UserAccount { get; set; }
+
+        public EventDetails EventDetails { get; set; }
     }
 }

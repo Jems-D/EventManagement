@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace backend.Class
@@ -45,9 +46,10 @@ namespace backend.Class
         public string? Description { get; set; }
 
         [ForeignKey("EventId")]
+        [JsonIgnore]
         public EventBooking EventBooking { get; set; }
 
-        [ForeignKey("RequesterId")]
-        public UserAccount UserAccount { get; set; }
+        /*[ForeignKey("RequesterId")]
+        public UserAccount UserAccount { get; set; }*/
     }
 }
