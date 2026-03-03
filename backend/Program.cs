@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+var myAllowOrigins = "_myAllowedSpecificOrigins";
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -46,6 +47,17 @@ builder.Services.AddMediatR(configuration =>
     configuration.RegisterServicesFromAssembly(typeof(Program).Assembly);
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(
+        name: myAllowOrigins,
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5173/").AllowAnyHeader().AllowAnyMethod();
+        }
+    );
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -64,5 +76,6 @@ if (app.Environment.IsDevelopment())
 }
 app.MapControllers();
 app.UseHttpsRedirection();
+app.UseCors();
 
 app.Run();
