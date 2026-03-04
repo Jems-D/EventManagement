@@ -32,7 +32,7 @@ namespace backend.Controllers
             return Ok(createdEvent);
         }
 
-        [HttpPost("api/AddEventDetails")]
+        [HttpPost("api/eventdetails")]
         public async Task<ActionResult<int>> AddEventDetails(
             [FromBody] AddEventDetailsDTO dto,
             [FromQuery] int id
@@ -47,8 +47,8 @@ namespace backend.Controllers
             return Ok(eventDetailsBooked);
         }
 
-        [HttpGet("api/details/{id}")]
-        public async Task<ActionResult<EventBooking>> GetEventDetailsById(int id)
+        [HttpGet("details")]
+        public async Task<ActionResult<EventBooking>> GetEventDetailsById([FromQuery] int id)
         {
             var eventDetails = await _sender.Send(new GetEventDetailsByIdQuery(id));
             if (eventDetails is null)
@@ -67,7 +67,7 @@ namespace backend.Controllers
             return eventBooked;
         }
 
-        [HttpGet]
+        [HttpGet("eventdetails")]
         public async Task<ActionResult<List<EventBookingDTO>>> GetAllEventDetails()
         {
             var allEventDetails = await _sender.Send(new GetEventDetailsQuery());

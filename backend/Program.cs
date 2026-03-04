@@ -53,7 +53,7 @@ builder.Services.AddCors(options =>
         name: myAllowOrigins,
         policy =>
         {
-            policy.WithOrigins("http://localhost:5173/").AllowAnyHeader().AllowAnyMethod();
+            policy.WithOrigins("http://localhost:5173").AllowAnyHeader().AllowAnyMethod();
         }
     );
 });
@@ -74,8 +74,9 @@ if (app.Environment.IsDevelopment())
         options.RoutePrefix = string.Empty;
     });
 }
+app.UseCors(myAllowOrigins);
+
 app.MapControllers();
 app.UseHttpsRedirection();
-app.UseCors();
 
 app.Run();

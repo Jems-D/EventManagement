@@ -1,2 +1,4 @@
 #appsettings
 backend/appsettings.json
+#.env file
+frontend/EventManagement/.env
